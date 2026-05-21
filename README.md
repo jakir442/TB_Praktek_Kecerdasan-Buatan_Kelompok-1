@@ -1,0 +1,5 @@
+Kelompok 1 - (Tugas Besar) Praktek Kecerdasan Buatan:
+ - Jakir Apriyan (2406004) 
+ - Maulana Muhammad Zaki (2406028) 
+ - Sandi Febriansah (2406001) 
+ - Rizky Taufik Hidayat (2406014) 
