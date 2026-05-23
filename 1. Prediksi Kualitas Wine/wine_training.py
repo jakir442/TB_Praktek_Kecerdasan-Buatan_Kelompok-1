@@ -24,6 +24,15 @@ print("📥 TAHAP 1: PENGUMPULAN DATA")
 
 # Load dataset dari file CSV
 df = pd.read_csv("WineQT.csv")
+df['quality_category'] = np.where(
+    df['quality'] <= 5,
+    'Buruk',
+    np.where(
+        df['quality'] <= 8,
+        'Sedang',
+        'Bagus'
+    )
+)
 
 print(f"✓ Dataset berhasil dimuat dari 'WineQT.csv'")
 print(f"  Jumlah baris  : {df.shape[0]}")
@@ -49,7 +58,7 @@ fitur_num = [
     'alcohol'
 ]
 
-target_col = 'quality'
+target_col = 'quality_category'
 
 fig, axes = plt.subplots(2, 2, figsize=(16, 10))
 fig.suptitle("EDA - Dataset WineQT", fontsize=24, fontweight="bold")
@@ -59,7 +68,7 @@ sns.scatterplot(
     data=df,
     x="alcohol",
     y="pH",
-    hue="quality",
+    hue="quality_category",
     palette="Set2",
     s=80,
     ax=axes[0, 0]
@@ -71,7 +80,7 @@ axes[0, 0].set_title("Scatter Plot: Alcohol vs pH", fontsize=17)
 sns.histplot(
     data=df,
     x="alcohol",
-    hue="quality",
+    hue="quality_category",
     kde=True,
     bins=15,
     palette="Set2",
@@ -82,7 +91,7 @@ axes[0, 1].set_title("Distribusi Alcohol", fontsize=17)
 
 # 3. Boxplot
 df_melt = df.melt(
-    id_vars="quality",
+    id_vars="quality_category",
     value_vars=fitur_num,
     var_name="Fitur",
     value_name="Nilai"
@@ -92,7 +101,7 @@ sns.boxplot(
     data=df_melt,
     x="Fitur",
     y="Nilai",
-    hue="quality",
+    hue="quality_category",
     palette="Set2",
     ax=axes[1, 0]
 )
@@ -102,13 +111,13 @@ axes[1, 0].tick_params(axis='x', rotation=35)
 
 # 4. Heatmap Korelasi
 corr_df = pd.concat(
-    [df[fitur_num], pd.get_dummies(df['quality'])],
+    [df[fitur_num], pd.get_dummies(df['quality_category'])],
     axis=1
 )
 
 corr_quality = corr_df.corr().loc[
     fitur_num,
-    df['quality'].unique()
+    df['quality_category'].unique()
 ]
 
 sns.heatmap(
@@ -194,7 +203,7 @@ print("""
 # 4b. Encode Target Variable
 le = LabelEncoder()
 
-df['quality_encoded'] = le.fit_transform(df['quality'])
+df['quality_encoded'] = le.fit_transform(df['quality_category'])
 
 print(f"""
 ✓ Encoding kelas berhasil:
@@ -706,6 +715,3 @@ Model Terbaik : {best_name}
 Akurasi Uji   : {eval_results[best_name]['Accuracy']:.4f}
 F1-Score      : {eval_results[best_name]['F1']:.4f}
 """)
-
-# Cara Runing
-# C:\Users\ASUS\AppData\Local\Programs\Python\Python310\python.exe wine_training.py
