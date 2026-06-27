@@ -253,7 +253,7 @@ AI Resume Analyzer
 </h1>
 
 <p>
-Resume Screening using NLP, TF-IDF and Machine Learning
+Analisis dan Klasifikasi Resume Menggunakan NLP, TF-IDF, SVM dan Machine Learning
 </p>
 
 </div>
@@ -307,7 +307,7 @@ with st.sidebar:
 
     st.divider()
 
-    st.success("Model Loaded")
+    st.success("Model Berhasil Dimuat")
 # ---------------- MAIN AREA ----------------
 col1, col2 = st.columns([1, 1])
 
@@ -334,11 +334,11 @@ with col1:
                 st.markdown("#### 🛠 Skills")
                 st.warning(sections["skills"][:600])
 
-            with st.expander("📄 Full Raw Resume"):
+            with st.expander("📄 Isi Resume Lengkap"):
                 st.text_area("", resume_text, height=300)
 
         else:
-            st.info("📂 Upload resume to see structured analysis")
+            st.info("📂 Unggah resume untuk melihat hasil analisis")
 
 with col2:
     st.markdown("## 🚀 Analysis Panel")
@@ -346,7 +346,7 @@ with col2:
     st.markdown("""
     <div class="card">
         <h4 style="color: white;">AI Model Status</h4>
-        <p style="color: white;">Ready to analyze candidate profile</p>
+        <p style="color: white;">Siap menganalisis profil kandidat</p>
     </div>
     """, unsafe_allow_html=True)
 
@@ -376,7 +376,7 @@ with col2:
 
         <h3>Predicted Category</h3>
 
-        <h1>{predicted_category}</h1>
+        <h1 style="color: white;">{predicted_category}</h1>
 
         </div>
         """, unsafe_allow_html=True)
@@ -414,7 +414,7 @@ with col2:
             # ==========================
             # TOP MATCHING ROLES
             # ==========================
-            st.markdown("### 🏆 Top Matching Roles")
+            st.markdown("### 🏆 Posisi yang Paling Sesuai")
 
             for rank, idx in enumerate(top_idx, start=1):
 
@@ -436,7 +436,7 @@ with col2:
 
                     with col2:
                         st.metric(
-                            label="Match",
+                            label="Kecocokan",
                             value=f"{relative_score:.0f}%"
                         )
 
@@ -453,10 +453,10 @@ with col2:
 
             st.info(
                 f"""
-                The uploaded resume is most closely aligned with the role of
-                **{best_role}** under the **{predicted_category}**
-                category based on NLP text extraction,
-                TF-IDF feature engineering, and Machine Learning classification.
+                Resume yang diunggah memiliki tingkat kecocokan tertinggi dengan posisi
+                **{best_role}** pada kategori **{predicted_category}** berdasarkan
+                hasil ekstraksi teks menggunakan NLP, pembobotan TF-IDF,
+                dan klasifikasi Machine Learning.
                 """
             )
 
